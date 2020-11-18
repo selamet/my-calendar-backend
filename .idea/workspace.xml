@@ -20,13 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0884f175-b7eb-4944-915c-b9c50ad5a3ad" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libs/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/api/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/api/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCalender/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCalender/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCalender/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCalender/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605449704932</updated>
-      <workItem from="1605449709543" duration="8316000" />
+      <workItem from="1605449709543" duration="9074000" />
     </task>
     <servers />
   </component>
