@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'user',
     'event',
 
-
     'corsheaders',
     'rest_framework',
 ]
