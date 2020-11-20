@@ -6,10 +6,9 @@ from event.models import Event
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['uuid', 'user', 'title', 'content', 'date', 'flag']
+        fields = ['uuid', 'title', 'content', 'date', 'flag']
         extra_kwargs = {
             "uuid": {'required': False},
-            "user": {'required': False},
             "title": {'required': True},
             "date": {'required': True},
         }
