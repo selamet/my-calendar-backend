@@ -23,9 +23,7 @@ class EventViewSet(viewsets.ModelViewSet):
         if not (from_date or to_date):
             now = datetime.datetime.now()
             from_date = '{}-{}-{}'.format(now.year, now.month, 1)
-            last_day = (datetime.date(now.year, now.month + 1, 1) - datetime.date(now.year, now.month, 1)).days
-            to_date = '{}-{}-{}'.format(now.year, now.month, last_day)
-
+            to_date = '{}-{}-{}'.format(now.year, now.month + 1, 1)
         date_range = [from_date, to_date]
         queryset = Event.objects.filter(user=request.user, date__range=date_range)
 
