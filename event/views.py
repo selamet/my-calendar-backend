@@ -20,10 +20,6 @@ class EventViewSet(viewsets.ModelViewSet):
         uuid = kwargs.get('uuid', {})
         from_date = request.GET.get('from', '')
         to_date = request.GET.get('to', '')
-        if not (from_date or to_date):
-            now = datetime.datetime.now()
-            from_date = '{}-{}-{}'.format(now.year, now.month, 1)
-            to_date = '{}-{}-{}'.format(now.year, now.month + 1, 1)
         date_range = [from_date, to_date]
         queryset = Event.objects.filter(user=request.user, date__range=date_range)
 
