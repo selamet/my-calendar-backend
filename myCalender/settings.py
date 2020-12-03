@@ -132,4 +132,10 @@ STATIC_URL = '/static/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+    "https://calendar.selamet.dev"
 ]
+
+import os
+
+a = os.environ.get('SELAMET')
+print(a)
