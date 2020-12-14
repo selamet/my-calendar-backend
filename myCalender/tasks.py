@@ -1,0 +1,1 @@
+from myCalender.celery import celery_app as app

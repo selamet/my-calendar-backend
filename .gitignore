@@ -114,3 +114,6 @@ Pipfile.lock
 
 config/
 Dockerfile
+
+celerybeat-schedule.db
+*dump.rdb
