@@ -10,7 +10,7 @@ router = routers.DefaultRouter()
 router.register(r'', EventViewSet, )
 
 urlpatterns = [
-    path('<uuid>', EventViewSet.as_view({'patch': 'partial_update', 'get': 'list', 'delete': 'destroy'})),
+    path('<uuid>', EventViewSet.as_view({'patch': 'partial_update', 'get': 'list', 'delete': 'destroy'}), name='event'),
 ]
 
 urlpatterns += router.urls

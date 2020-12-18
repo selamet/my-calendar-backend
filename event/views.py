@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 
 # Create your views here.
@@ -21,7 +22,10 @@ class EventViewSet(viewsets.ModelViewSet):
         from_date = request.GET.get('from', '')
         to_date = request.GET.get('to', '')
         date_range = [from_date, to_date]
-        queryset = Event.objects.filter(user=request.user, date__range=date_range)
+        try:
+            queryset = Event.objects.filter(user=request.user, date__range=date_range)
+        except ValidationError as err:
+            return Response(err, 400)
 
         if uuid:
             queryset = queryset.filter(uuid=uuid)
