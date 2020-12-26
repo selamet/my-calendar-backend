@@ -91,3 +91,42 @@ class GetEventTestCase(BaseTestCase):
         self.url += '?from=2020-11-25&to=2021-1-15'
         response = self.client.get(self.url)
         self.assertEqual(401, response.status_code)
+
+
+class UpdateEventTestCase(BaseTestCase):
+
+    def setUp(self):
+        super(UpdateEventTestCase, self).setUp()
+
+        self.event = Event.objects.create(title='My title', date='2020-11-26 19:33', content='test description',
+                                          user=self.user)
+        self.user_2 = User.objects.create_user(username='test@mail.com', email='test@mail.com',
+                                               password='password5353')
+        self.url += f"{self.event.uuid}"
+
+    def test_jwt_authentication(self, username="selamet@mail.com", password="qwe123123"):
+        response = self.client.post(self.login_url, data={'username': username, 'password': password})
+        self.assertEqual(200, response.status_code)
+        self.assertTrue("access" in json.loads(response.content))
+        self.token = response.data["access"]
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
+
+    def test_update_event_patch(self):
+        response = self.client.patch(self.url, data={'title': 'title update', 'date': '2020-11-26 19:33'})
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(Event.objects.get(uuid=self.event.uuid).title, "title update")
+
+    def test_update_event_put(self):
+        response = self.client.put(self.url, data={'title': 'title update', 'date': '2020-11-26 19:33'})
+        self.assertEqual(405, response.status_code)
+
+    def test_update_event_patch_other_user(self):
+        self.test_jwt_authentication(username="test@mail.com", password='password5353')
+        response = self.client.patch(self.url, data={'title': 'title update', 'date': '2020-11-26 19:33'})
+        self.assertEqual(403, response.status_code)
+        self.assertNotEqual(Event.objects.get(uuid=self.event.uuid).content, "title update")
+
+    def test_update_event_invalid(self):
+        self.url += '1'
+        response = self.client.patch(self.url, data={'title': 'title update', 'date': '2020-11-26 19:33'})
+        self.assertEqual(404, response.status_code)

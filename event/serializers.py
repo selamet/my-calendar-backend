@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
+from rest_framework.response import Response
 
 from event.models import Event
 
 
 class EventSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Event
         fields = ['uuid', 'title', 'content', 'date', 'flag']
@@ -30,3 +30,11 @@ class EventSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = self.context['request']
         return Event.objects.create(user=request.user, **validated_data)
+
+    def update(self, instance, validated_data):
+        request = self.context['request']
+        if request.user != instance.user:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied()
+
+        return super(EventSerializer, self).update(instance, validated_data)
