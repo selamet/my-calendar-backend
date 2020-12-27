@@ -38,3 +38,5 @@ class EventSerializer(serializers.ModelSerializer):
             raise PermissionDenied()
 
         return super(EventSerializer, self).update(instance, validated_data)
+
+

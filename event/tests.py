@@ -93,16 +93,18 @@ class GetEventTestCase(BaseTestCase):
         self.assertEqual(401, response.status_code)
 
 
-class UpdateEventTestCase(BaseTestCase):
+class UpdateDeleteEventTestCase(BaseTestCase):
 
     def setUp(self):
-        super(UpdateEventTestCase, self).setUp()
+        super(UpdateDeleteEventTestCase, self).setUp()
 
         self.event = Event.objects.create(title='My title', date='2020-11-26 19:33', content='test description',
                                           user=self.user)
         self.user_2 = User.objects.create_user(username='test@mail.com', email='test@mail.com',
                                                password='password5353')
         self.url += f"{self.event.uuid}"
+
+        self.test_jwt_authentication()
 
     def test_jwt_authentication(self, username="selamet@mail.com", password="qwe123123"):
         response = self.client.post(self.login_url, data={'username': username, 'password': password})
@@ -130,3 +132,18 @@ class UpdateEventTestCase(BaseTestCase):
         self.url += '1'
         response = self.client.patch(self.url, data={'title': 'title update', 'date': '2020-11-26 19:33'})
         self.assertEqual(404, response.status_code)
+
+    def test_delete_event(self):
+        response = self.client.delete(self.url)
+        self.assertEqual(204, response.status_code)
+        self.assertFalse(Event.objects.filter(uuid=self.event.uuid).exists())
+
+    def test_delete_event_other_user(self):
+        self.test_jwt_authentication(username="test@mail.com", password='password5353')
+        response = self.client.delete(self.url)
+        self.assertEqual(403, response.status_code)
+
+    def test_delete_event_unauthorized(self):
+        self.client.credentials()
+        response = self.client.delete(self.url)
+        self.assertEqual(401, response.status_code)

@@ -33,3 +33,9 @@ class EventViewSet(viewsets.ModelViewSet):
         serializer = EventSerializer(queryset, many=True)
 
         return Response(serializer.data)
+
+    def perform_destroy(self, instance):
+        if self.request.user != instance.user:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied()
+        instance.delete()
