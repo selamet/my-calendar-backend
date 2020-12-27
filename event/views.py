@@ -9,12 +9,13 @@ import datetime
 
 from event.models import Event
 from event.serializers import EventSerializer
+from event.permissions import IsOwner
 
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsOwner)
     lookup_field = 'uuid'
 
     def list(self, request, *args, **kwargs):
